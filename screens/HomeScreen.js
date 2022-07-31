@@ -2,17 +2,22 @@ import { StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import ListItem from '../ components/ListItem';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Loading from '../ components/Loading';
 
 const apikey = '7e11f8e7a5de4ab28b175a098b1b18be';
 const URL = `https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apikey}`;
 
 export default function HomeScreen({ navigation }) {
     const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     const fetchArticles = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(URL);
             setArticles(response.data.articles);
         } catch (error) {}
+        setLoading(false);
     };
     useEffect(() => {
         fetchArticles();
@@ -35,6 +40,8 @@ export default function HomeScreen({ navigation }) {
                     />
                 )}
             />
+
+            {loading && <Loading />}
         </SafeAreaView>
     );
 }
