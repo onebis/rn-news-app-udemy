@@ -8,7 +8,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 clips: [...state.clips, action.clip],
             };
-        case 'DELITE_CLIP':
+        case 'DELETE_CLIP':
             return {
                 ...state,
                 clips: state.clips.filter(
